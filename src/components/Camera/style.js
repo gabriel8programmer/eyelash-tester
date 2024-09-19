@@ -2,14 +2,30 @@
 import { StyleSheet } from "react-native"
 
 export default StyleSheet.create({
-    header: {
-        width: "100%",
-        backgroundColor: "#E83199",
-        alignItems: "center",
-        padding: 30
+    containerCamera: {
+        flex: 1,
     },
-    imgLogo: {
-        width: 100,
-        height: 80
-    }
+    camera: {
+        flex: 1
+    },
+    containerButtons: {
+        flex: 1
+    },
+    cameraButton: {
+        width: 70,
+        height: 70,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 20,
+        position: "absolute",
+        bottom: 50
+    },
+    cameraButtonLeft: {
+        backgroundColor: "#E83199",
+        left: 50
+    },
+    cameraButtonRight: {
+        backgroundColor: "#fff",
+        right: 50
+    },
 })

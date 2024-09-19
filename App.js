@@ -1,7 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Header from './src/components/Header';
 import Main from './src/components/Main';
+import Camera from './src/components/Camera/';
 
 export default function App() {
   return (

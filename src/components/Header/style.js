@@ -6,10 +6,10 @@ export default StyleSheet.create({
         width: "100%",
         backgroundColor: "#E83199",
         alignItems: "center",
-        padding: 30
+        padding: 50
     },
     imgLogo: {
-        width: 100,
-        height: 80
+        width: 120,
+        height: 100
     }
 })

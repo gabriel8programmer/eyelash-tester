@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { View, TouchableOpacity, Animated, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, Animated } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import styles from "./style"
 
-const ExpandableButton = () => {
+const ExpandableButton = (props) => {
   const [expanded, setExpanded] = useState(false)
   const animation = useRef(new Animated.Value(0)).current
 
@@ -42,14 +42,14 @@ const ExpandableButton = () => {
     <View style={styles.container}>
       {/* Botão 1 */}
       <Animated.View style={[styles.secondaryButton, button1Style]}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={props.onChooseInternalStorage}>
           <FontAwesome name="camera" size={24} color="#555" />
         </TouchableOpacity>
       </Animated.View>
 
       {/* Botão 2 */}
       <Animated.View style={[styles.secondaryButton, button2Style]}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={props.onChooseTakePhoto}>
           <FontAwesome name="image" size={24} color="#555" />
         </TouchableOpacity>
       </Animated.View>

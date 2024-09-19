@@ -1,14 +1,27 @@
 import React from "react"
-import { TouchableOpacity, View, Text } from "react-native"
+import { View, Text } from "react-native"
 import styles from "./style"
-import { FontAwesome } from "@expo/vector-icons"
-import ButtonsCamera from "../expandableButton"
 import ExpandableButton from "../expandableButton"
+import Camera from "../Camera/"
 
 export default function Main(){
+
+    const loadSearcherStorage = ()=> {
+
+    }
+
+    const loadCamera = ()=> {
+
+    }
+
     return (
         <View style={styles.main}>
-            <ExpandableButton></ExpandableButton>
+            <ExpandableButton 
+                onChooseInternalStorage={loadSearcherStorage} 
+                onChooseTakePhoto={loadCamera} 
+            />
+
+            {/* <Camera /> */}
         </View>
     )
 }
