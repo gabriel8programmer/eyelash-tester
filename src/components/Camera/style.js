@@ -6,7 +6,8 @@ export default StyleSheet.create({
         flex: 1,
     },
     camera: {
-        flex: 1
+        flex: 1,
+        zIndex: 1000
     },
     containerButtons: {
         flex: 1
