@@ -1,7 +1,9 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+
+import * as FaceDetector from "expo-face-detector"
 
 //components
 import Camera from './src/components/Camera';
@@ -63,50 +65,69 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+
+    (async () => {
+
+      if (selectedImage) {
+        const detectFaces = await FaceDetector.detectFacesAsync(selectedImage, {
+          mode: FaceDetector.FaceDetectorMode.fast,
+          detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+          runClassifications: FaceDetector.FaceDetectorClassifications.none,
+          minDetectionInterval: 100,
+          tracking: true,
+        })
+        console.log(detectFaces.faces)
+      }
+
+    })()
+
+  }, [selectedImage])
+
   return (
-    // <View style={styles.container}>
-    //   { /** header */}
-    //   <View style={styles.header}>
-    //     <Text style={styles.headerText}>Provador Virtual</Text>
-    //   </View>
+    <View style={styles.container}>
+      { /** header */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Provador Virtual</Text>
+      </View>
 
-    //   <View style={styles.editor}>
+      <View style={styles.editor}>
 
-    //     {!selectedImage ?
+        {!selectedImage ?
 
-    //       <TouchableOpacity onPress={pickImage} style={styles.pickButton}>
-    //         <Text style={styles.pickButtonText}>Pegar uma imagem</Text>
-    //       </TouchableOpacity>
-    //       :
-    //       <View style={styles.containerEditor}>
+          <TouchableOpacity onPress={pickImage} style={styles.pickButton}>
+            <Text style={styles.pickButtonText}>Pegar uma imagem</Text>
+          </TouchableOpacity>
+          :
+          <View style={styles.containerEditor}>
 
-    //         <View style={styles.containerImage}>
-    //           <Image source={{ uri: selectedImage }} style={styles.image} />
-    //           {/* <WebView source={{ uri: image }} style={{ flex: 1 }} /> */}
-    //         </View>
+            <View style={styles.containerImage}>
+              <Image source={{ uri: selectedImage }} style={styles.image} />
+              {/* <WebView source={{ uri: image }} style={{ flex: 1 }} /> */}
+            </View>
 
-    //         <FlatList
-    //           style={styles.eyelashesList}
-    //           data={eyelashes}
-    //           keyExtractor={(item) => item.id}
-    //           horizontal={true}
-    //           renderItem={({ item }) => {
-    //             return (
-    //               <TouchableOpacity style={styles.eyelashButton}>
-    //                 <Image source={item.imageUri} style={styles.eyelashImage} />
-    //               </TouchableOpacity>
-    //             )
-    //           }}
-    //         />
+            <FlatList
+              style={styles.eyelashesList}
+              data={eyelashes}
+              keyExtractor={(item) => item.id}
+              horizontal={true}
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity style={styles.eyelashButton}>
+                    <Image source={item.imageUri} style={styles.eyelashImage} />
+                  </TouchableOpacity>
+                )
+              }}
+            />
 
-    //       </View>
-    //     }
+          </View>
+        }
 
 
-    //   </View>
+      </View>
 
-    // </View>
-    <Camera />
+    </View>
+    // <Camera />
   );
 }
 
