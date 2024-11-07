@@ -6,7 +6,13 @@ import * as FaceDetector from "expo-face-detector"
 import styles from "./styles"
 
 const handleFacesDetected = ({ faces }) => {
-    console.log(faces);
+    if (faces.length == 0) {
+        return
+    }
+
+    faces.forEach(face => {
+        console.log(face.RIGHT_EYE)
+    })
 };
 
 export default function App() {
@@ -40,7 +46,7 @@ export default function App() {
                 onFacesDetected={handleFacesDetected}
                 faceDetectorSettings={{
                     mode: FaceDetector.FaceDetectorMode.fast,
-                    detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+                    detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
                     runClassifications: FaceDetector.FaceDetectorClassifications.none,
                     minDetectionInterval: 100,
                     tracking: true,
