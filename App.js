@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { Image, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
+//components
+import Camera from './src/components/Camera';
+
 let idCounter = new Date().getTime()
 
 const eyelashes = [
@@ -61,48 +64,49 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      { /** header */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Provador Virtual</Text>
-      </View>
+    // <View style={styles.container}>
+    //   { /** header */}
+    //   <View style={styles.header}>
+    //     <Text style={styles.headerText}>Provador Virtual</Text>
+    //   </View>
 
-      <View style={styles.editor}>
+    //   <View style={styles.editor}>
 
-        {!selectedImage ?
+    //     {!selectedImage ?
 
-          <TouchableOpacity onPress={pickImage} style={styles.pickButton}>
-            <Text style={styles.pickButtonText}>Pegar uma imagem</Text>
-          </TouchableOpacity>
-          :
-          <View style={styles.containerEditor}>
+    //       <TouchableOpacity onPress={pickImage} style={styles.pickButton}>
+    //         <Text style={styles.pickButtonText}>Pegar uma imagem</Text>
+    //       </TouchableOpacity>
+    //       :
+    //       <View style={styles.containerEditor}>
 
-            <View style={styles.containerImage}>
-              <Image source={{ uri: selectedImage }} style={styles.image} />
-              {/* <WebView source={{ uri: image }} style={{ flex: 1 }} /> */}
-            </View>
+    //         <View style={styles.containerImage}>
+    //           <Image source={{ uri: selectedImage }} style={styles.image} />
+    //           {/* <WebView source={{ uri: image }} style={{ flex: 1 }} /> */}
+    //         </View>
 
-            <FlatList
-              style={styles.eyelashesList}
-              data={eyelashes}
-              keyExtractor={(item) => item.id}
-              horizontal={true}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity style={styles.eyelashButton}>
-                    <Image source={item.imageUri} style={styles.eyelashImage} />
-                  </TouchableOpacity>
-                )
-              }}
-            />
+    //         <FlatList
+    //           style={styles.eyelashesList}
+    //           data={eyelashes}
+    //           keyExtractor={(item) => item.id}
+    //           horizontal={true}
+    //           renderItem={({ item }) => {
+    //             return (
+    //               <TouchableOpacity style={styles.eyelashButton}>
+    //                 <Image source={item.imageUri} style={styles.eyelashImage} />
+    //               </TouchableOpacity>
+    //             )
+    //           }}
+    //         />
 
-          </View>
-        }
+    //       </View>
+    //     }
 
 
-      </View>
+    //   </View>
 
-    </View>
+    // </View>
+    <Camera />
   );
 }
 
