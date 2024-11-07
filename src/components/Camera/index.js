@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react"
-import { StyleSheet } from "react-native"
-import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera"
+import { View, Text, StyleSheet } from "react-native"
+import { Camera, useCameraDevice, useCameraPermission, useFrameProcessor } from "react-native-vision-camera"
 
 //style
 import styles from "./styles"
@@ -11,6 +11,12 @@ export default () => {
     const device = useCameraDevice("front")
     const { hasPermission, requestPermission } = useCameraPermission()
     const [permission, setPermission] = useState(false)
+
+    //frameprocessor 
+    const frameProcessor = useFrameProcessor((frame) => {
+        'worklet'
+        console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`)
+    }, [])
 
     useEffect(() => {
         (async () => {
@@ -36,6 +42,7 @@ export default () => {
             style={StyleSheet.absoluteFill}
             device={device}
             isActive={true}
+            frameProcessor={frameProcessor}
         />
     )
 }
