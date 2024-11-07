@@ -8,33 +8,11 @@ import * as FaceDetector from "expo-face-detector"
 //components
 import Camera from './src/components/Camera';
 
-let idCounter = new Date().getTime()
-
 const eyelashes = [
   {
-    id: (++idCounter).toString(),
+    id: 1,
     imageUri: require('./src/assets/img/eyelash.png')
-  },
-  {
-    id: (++idCounter).toString(),
-    imageUri: require('./src/assets/img/eyelash.png')
-  },
-  {
-    id: (++idCounter).toString(),
-    imageUri: require('./src/assets/img/eyelash.png')
-  },
-  {
-    id: (++idCounter).toString(),
-    imageUri: require('./src/assets/img/eyelash.png')
-  },
-  {
-    id: (++idCounter).toString(),
-    imageUri: require('./src/assets/img/eyelash.png')
-  },
-  {
-    id: (++idCounter).toString(),
-    imageUri: require('./src/assets/img/eyelash.png')
-  },
+  }
 ];
 
 
@@ -77,7 +55,8 @@ export default function App() {
           minDetectionInterval: 100,
           tracking: true,
         })
-        console.log(detectFaces.faces)
+
+        setFaces(detectFaces.faces)
       }
 
     })()
