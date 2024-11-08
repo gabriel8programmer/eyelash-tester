@@ -1,33 +1,32 @@
 
-import { useEffect, useState } from 'react';
-import { Image, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import { useEffect, useState } from 'react'
+import { Image, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
 
 import * as FaceDetector from "expo-face-detector"
 
 //components
-import Camera from './src/components/Camera';
+import Camera from './src/components/Camera'
 
 const eyelashes = [
   {
     id: 1,
     imageUri: require('./src/assets/img/eyelash.png')
   }
-];
-
+]
 
 export default function App() {
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null)
   const [faces, setFaces] = useState([])
 
   const pickImage = async () => {
     // Pede permissão para acessar as fotos
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
     if (permissionResult.granted === false) {
-      alert("É necessária permissão para acessar as fotos!");
-      return;
+      alert("É necessária permissão para acessar as fotos!")
+      return
     }
 
     // Abre o seletor de imagens
@@ -36,12 +35,12 @@ export default function App() {
       allowsEditing: true,
       aspect: [3, 4],
       quality: 1,
-    });
+    })
 
     if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+      setSelectedImage(result.assets[0].uri)
     }
-  };
+  }
 
   useEffect(() => {
 
@@ -92,7 +91,9 @@ export default function App() {
               horizontal={true}
               renderItem={({ item }) => {
                 return (
-                  <TouchableOpacity style={styles.eyelashButton}>
+                  <TouchableOpacity
+                    style={styles.eyelashButton}
+                  >
                     <Image source={item.imageUri} style={styles.eyelashImage} />
                   </TouchableOpacity>
                 )
@@ -107,7 +108,7 @@ export default function App() {
 
     </View>
     // <Camera />
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -170,5 +171,5 @@ const styles = StyleSheet.create({
     width: 50,
     height: 20
   },
-});
+})
 
