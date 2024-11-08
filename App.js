@@ -112,9 +112,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
   header: {
     backgroundColor: '#E83199',
@@ -143,10 +141,11 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase'
   },
   containerEditor: {
-    flex: 1
+    flex: 1,
+    width: '100%'
   },
   containerImage: {
-    flex: 1
+    flex: 1,
   },
   image: {
     flex: 1,
