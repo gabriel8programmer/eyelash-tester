@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Alert, TouchableOpacity, Image, Text } from 'react-native'
+import MediapipeFacemesh from 'react-native-mediapipe-facemesh'
+
 import {
   launchCamera,
   launchImageLibrary,
@@ -8,9 +10,9 @@ import {
   ImagePickerResponse,
   Asset,
 } from 'react-native-image-picker'
-import Header from './src/components/Header'
 
 const App: React.FC = () => {
+
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
   // Função para abrir câmera ou galeria
@@ -39,8 +41,13 @@ const App: React.FC = () => {
   }
 
   return (
+
     <View style={styles.container}>
-      <Header />
+      <View style={styles.header}>
+        <Image
+          source={require('./src/assets/img/logo.png')}
+        />
+      </View>
 
       <View style={styles.stage}>
         {selectedImage ? (
@@ -81,6 +88,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#bb9690',
+  },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#E83199',
+    height: 150,
+    width: '100%'
   },
   containerButtons: {
     flexDirection: 'row',
