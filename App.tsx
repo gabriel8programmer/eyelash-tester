@@ -1,118 +1,122 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from 'react'
+import { StyleSheet, View, Alert, TouchableOpacity, Image, Text } from 'react-native'
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+  launchCamera,
+  launchImageLibrary,
+  CameraOptions,
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  Asset,
+} from 'react-native-image-picker'
+import Header from './src/components/Header'
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  // Função para abrir câmera ou galeria
+  const handleImageSelection = async (type: 'camera' | 'gallery') => {
+    const options: CameraOptions & ImageLibraryOptions = {
+      mediaType: 'photo',
+      quality: 1,
+      saveToPhotos: type === 'camera',
+    }
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+    const result =
+      type === 'camera' ? await launchCamera(options) : await launchImageLibrary(options)
+    processImageResult(result)
+  }
+
+  // Processa o resultado da captura ou seleção
+  const processImageResult = (result: ImagePickerResponse) => {
+    if (result.didCancel) {
+      Alert.alert('Ação cancelada pelo usuário')
+    } else if (result.errorMessage) {
+      Alert.alert('Erro ao acessar a imagem', result.errorMessage)
+    } else if (result.assets && result.assets.length > 0) {
+      const photo: Asset = result.assets[0]
+      setSelectedImage(photo.uri || null)
+    }
+  }
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      <Header />
+
+      <View style={styles.stage}>
+        {selectedImage ? (
+          <Image
+            source={{ uri: selectedImage }}
+            style={styles.previewImage}
+            resizeMode="cover"
+          />
+        ) : (
+          <Text style={styles.placeholderText}>Carregue uma Imagem</Text>
+        )}
+      </View>
+
+      <View style={styles.containerButtons}>
+        <TouchableOpacity
+          onPress={() => handleImageSelection('camera')}
+          style={styles.button}>
+          <Image
+            source={require('./src/assets/img/camera-icon.png')}
+            style={styles.iconButton}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleImageSelection('gallery')}
+          style={styles.button}>
+          <Image
+            source={require('./src/assets/img/galery-icon.png')}
+            style={styles.iconButton}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#bb9690',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  containerButtons: {
+    flexDirection: 'row',
+    gap: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 150,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  stage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
-  highlight: {
-    fontWeight: '700',
+  previewImage: {
+    flex: 1,
+    width: '100%',
+    borderRadius: 10,
   },
-});
+  placeholderText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  button: {
+    width: 80,
+    height: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#E83199',
+    borderRadius: 20,
+  },
+  iconButton: {
+    width: '50%',
+    height: '50%',
+  },
+})
 
-export default App;
+export default App
