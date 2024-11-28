@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Alert, TouchableOpacity, Image, Text } from 'react-native'
-import MediapipeFacemesh from 'react-native-mediapipe-facemesh'
 
 import {
   launchCamera,
